@@ -1,7 +1,7 @@
 
 CREATE TABLE ADMIN
 (admin_email_id  varchar(50)   NOT NULL,
-fname varchar(30)    NOT NULL
+fname varchar(30)    NOT NULL,
 
 PRIMARY KEY(admin_email_id)
 );
