@@ -176,7 +176,7 @@ public class login extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(103, 103, 103)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(268, 268, 268))
         );
 
@@ -237,13 +237,19 @@ public class login extends javax.swing.JFrame {
                 String query = "SELECT mentor_email_id, m_password from mentor where mentor_email_id = '" + user + "' and m_password = '" + password + "';";
                 PreparedStatement stat = conn.prepareStatement(query);
                 ResultSet rs = stat.executeQuery(query);
+                
+                String q1 = "select Name from mentor where mentor_email_id = '"+user+"'";
+                PreparedStatement s1 = conn.prepareStatement(q1);
+                ResultSet r1 = stat.executeQuery(q1);
                 if (rs.next()) {
                     JOptionPane.showMessageDialog(this, "Login Succssful");
-                    new Mentordashboard().setVisible(true);
+                    String uname = rs.getNString("Name");
+                    new Mentordashboard().setVisible(true);                    
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid Email ID or Password", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
