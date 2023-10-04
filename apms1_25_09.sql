@@ -2,29 +2,29 @@
 CREATE TABLE ADMIN
 (admin_email_id  varchar(50)   NOT NULL,
 fname varchar(30)    NOT NULL,
-
+a_password varchar(50) NOT NULL,
 PRIMARY KEY(admin_email_id)
 );
-ALTER TABLE ADMIN ADD a_password varchar(50) NOT NULL;
+
 
 select * from ADMIN;
 
 CREATE TABLE USERS
 (
-login_id		VARCHAR(11)		NOT NULL,
+login_id		INT	 	NOT NULL  auto_increment,
 fullname		VARCHAR(30)		NOT NULL,
 PRIMARY KEY (login_id)
 );
 
 CREATE TABLE STUDENT
-(student_email_id   varchar(30)   NOT NULL,
-group_id   varchar(30)    NOT NULL,
-project_topic   varchar(50)   ,
-login_id		VARCHAR(11)		NOT NULL,
-BRANCH VARCHAR(4) NOT NULL,
-roll_no INT NOT NULL,
-class VARCHAR(4) NOT NULL,
-s_password VARCHAR(50) NOT NULL,
+(
+student_email_id varchar(30)   NOT NULL,
+sname           varchar(30)    NOT NULL,
+s_password      varchar(30)    NOT NULL,
+BRANCH           VARCHAR(4)    NOT NULL,
+roll_no             INT        NOT NULL,
+class           VARCHAR(4)     NOT NULL,
+login_id		INT	   ,
 PRIMARY KEY(student_email_id),
 FOREIGN KEY(login_id) REFERENCES USERS(login_id)
 );
@@ -41,6 +41,18 @@ VALUES
 ('2022.pranav.pol@ves.ac.in','4','ACADEMIC PROJECT MANAGEMENT SYSTEM','INFTSTD0002','INFT',37,'D10A'),
 ('2022.arnav.sawant@ves.ac.in','4','ACADEMIC PROJECT MANAGEMENT SYSTEM','INFTSTD0003','INFT',49,'D10A');
 
+create TABLE GROUP_INFO
+(
+group_id int not null auto_increment,
+group_topic varchar(45) not null,
+student_email_id varchar(30),
+admin_email_id  varchar(50),
+mentor_email_id		VARCHAR(50),
+primary key (group_id),
+foreign key (student_email_id) references STUDENT(student_email_id),
+foreign key (admin_email_id) references ADMIN(admin_email_id),
+foreign key (mentor_email_id) references MENTOR(mentor_email_id)
+);
 
 
 
@@ -48,23 +60,26 @@ VALUES
 CREATE TABLE MENTOR(
 mentor_email_id		VARCHAR(50)		NOT NULL,
 Name				VARCHAR(30)		NOT NULL,
-PRIMARY KEY(mentor_email_iD)
+m_password varchar(50) NOT NULL,
+admin_email_id      varchar(50) NULL,
+PRIMARY KEY(mentor_email_iD),
+foreign key (admin_email_id) references ADMIN(admin_email_id)
 );
-ALTER TABLE MENTOR ADD m_password varchar(50) NOT NULL;
+
 
 INSERT INTO USERS
 VALUES 
-('INFTMTR0001','CHARUSHEELA NEHETE'),
-('INFTSTD0001','SIDDHANT SATHE'),
-('INFTSTD0003','ARNAV SAWANT'),
-('INFTSTD0004','PRANAV TITAMBE'),
-('INFTSTD0005','OMKAR GHOLAP'),
-('INFTSTD0008','MANYA ITAL'),
-('INFTSTD0009','VAISHNAL MALI'),
-('INFTSTD0010','PRAJJWAL PANDEY'),
-('INFTSTD0011','ANUSHKA SHAHANE'),
-('INFTSTD0007','VEDANG WAJGE'),
-('INFTSTD0006','RONAK KATARIYA');
+(1,'CHARUSHEELA NEHETE');
+-- ('INFTSTD0001','SIDDHANT SATHE'),
+-- ('INFTSTD0003','ARNAV SAWANT'),
+-- ('INFTSTD0004','PRANAV TITAMBE'),
+-- ('INFTSTD0005','OMKAR GHOLAP'),
+-- ('INFTSTD0008','MANYA ITAL'),
+-- ('INFTSTD0009','VAISHNAL MALI'),
+-- ('INFTSTD0010','PRAJJWAL PANDEY'),
+-- ('INFTSTD0011','ANUSHKA SHAHANE'),
+-- ('INFTSTD0007','VEDANG WAJGE'),
+-- ('INFTSTD0006','RONAK KATARIYA');
 
 INSERT INTO USERS
 VALUES('INFTSTD0101','TEENA WAISHY');
@@ -79,10 +94,10 @@ INSERT INTO USERS (login_id,fullname) VALUES ('INFTSTD0002','PRANAV POL');
 
 CREATE TABLE LOGIN(
 PASSWORD		VARCHAR(30)			NOT NULL,
-adminemail_id  varchar(50)   NOT NULL,
+admin_email_id  varchar(50)   NOT NULL,
 login_id		VARCHAR(11)	NOT NULL,
 PRIMARY KEY(PASSWORD),
-FOREIGN KEY(adminemail_id)	REFERENCES ADMIN(admin_email_iD)
+FOREIGN KEY(admin_email_id)	REFERENCES ADMIN(admin_email_iD)
 );
 
 ALTER TABLE LOGIN ADD role varchar(10) NOT NULL;
